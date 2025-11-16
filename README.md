@@ -33,4 +33,4 @@ Admin Dashboard
 
 ## Getting Started
 
-View a demo of this app [here](https://pizza-fiesta.vercel.app/).<br><br>
+Live demo of this app [here](https://pizza-fiesta.vercel.app/).<br><br>
