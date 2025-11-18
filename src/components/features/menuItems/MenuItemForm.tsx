@@ -58,9 +58,17 @@ const MenuItemForm = ({ menuItem, buttonText, onSubmit, onDelete }: MenuItemForm
         <input type="text" placeholder='Item name' value={name ?? ''} onChange={e => setName(e.target.value)} className="input" />
         <label> Description</label>
         <textarea rows={5} placeholder="Description" value={description ?? ''} onChange={e => setDescription(e.target.value)} className="input" />
-        <Select label="Select a category" size="sm" radius="lg" className="light my-2"
-          value={category ?? ''}
-          onChange={e => setCategory(e.target.value)}>
+        <Select 
+          label="Select a category" 
+          size="sm" 
+          radius="lg" 
+          className="light my-2"
+          selectedKeys={category ? [category] : []}
+          onSelectionChange={(keys) => {
+            const selectedKey = Array.from(keys)[0] as string;
+            setCategory(selectedKey || '');
+          }}
+          placeholder="Choose a category">
           {categories.map(c =>
             <SelectItem
               key={c._id}

@@ -78,7 +78,7 @@ const MenuItemPopUp = ({ menuItem, setShowPopUp, onAdd }: MenuItemPopUpProps) =>
           >
             Add to Cart <span className='font-semibold'>${addToCartPrice}</span>
           </button>
-          <Button color='danger' variant='flat' radius='full' className='my-2' fullWidth onClick={() => setShowPopUp(false)}>Cancel</Button>
+          <Button color='danger' variant='flat' radius='full' className='my-2' fullWidth onPress={() => setShowPopUp(false)}>Cancel</Button>
         </div>
       </div>
     </div>

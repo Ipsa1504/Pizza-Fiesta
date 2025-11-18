@@ -159,7 +159,7 @@ const CategoriesPage = () => {
                   <Button type="submit" color="primary" fullWidth className="font-semibold hover:text-white" disabled={submitting}>
                     {selectedCategory ? "Save Changes" : "Add Category"}
                   </Button>
-                  <Button color="danger" variant='flat' fullWidth className="border border-danger hover:text-white" disabled={submitting} onClick={() => { setShowAddNewBtn(!showAddNewBtn), setSelectedCategory(null), setCategoryName(''), setCategoryImage(''), setError('') }}>
+                  <Button color="danger" variant='flat' fullWidth className="border border-danger hover:text-white" disabled={submitting} onPress={() => { setShowAddNewBtn(!showAddNewBtn), setSelectedCategory(null), setCategoryName(''), setCategoryImage(''), setError('') }}>
                     Cancel
                   </Button>
                 </div>

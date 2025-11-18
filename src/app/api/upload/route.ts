@@ -1,14 +1,23 @@
 import cloudinary from 'cloudinary';
 import { NextRequest, NextResponse } from 'next/server';
 
-cloudinary.v2.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_SECRECT,
-  secure: true
-});
+// Only configure Cloudinary if credentials are available
+if (process.env.CLOUDINARY_CLOUD_NAME && process.env.CLOUDINARY_API_KEY && process.env.CLOUDINARY_API_SECRECT) {
+  cloudinary.v2.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRECT,
+    secure: true
+  });
+}
 
 export async function POST(req: NextRequest) {
+  // Check if Cloudinary is configured
+  if (!process.env.CLOUDINARY_CLOUD_NAME || !process.env.CLOUDINARY_API_KEY || !process.env.CLOUDINARY_API_SECRECT) {
+    return NextResponse.json({ 
+      err: "Cloudinary not configured. Please add CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, and CLOUDINARY_API_SECRECT to your .env.local file." 
+    }, { status: 500 });
+  }
 
   const data = await req.formData();
 
