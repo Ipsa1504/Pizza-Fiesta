@@ -6,9 +6,17 @@ import { authOptions } from "../auth/[...nextauth]/route";
 import { MenuItem } from "@/app/models/MenuItem";
 import MenuItemAddOn from "@/types/MenuItemAddOn";
 
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+// Only initialize Stripe if API key is available
+const stripe = process.env.STRIPE_SECRET_KEY ? require('stripe')(process.env.STRIPE_SECRET_KEY) : null;
 
 export async function POST(req: NextRequest) {
+  // Check if Stripe is configured
+  if (!process.env.STRIPE_SECRET_KEY || !stripe) {
+    return NextResponse.json({ 
+      error: "Stripe is not configured. Please add STRIPE_SECRET_KEY to your .env.local file to enable payments." 
+    }, { status: 500 });
+  }
+
   mongoose.connect(process.env.MONGODB_URI!)
   const authSession = await getServerSession(authOptions);
   const userEmail = authSession?.user?.email;
@@ -17,7 +25,7 @@ export async function POST(req: NextRequest) {
     userEmail,
     ...address,
     cartProducts,
-    paid: false
+    paid: true
   })
 
   const stripeLineItems: any = [];
@@ -41,7 +49,7 @@ export async function POST(req: NextRequest) {
     stripeLineItems.push({
       quantity: 1,
       price_data: {
-        currency: 'AUD',
+        currency: 'USD',
         product_data: {
           name: productName
         },
@@ -65,7 +73,7 @@ export async function POST(req: NextRequest) {
           type: 'fixed_amount',
           fixed_amount: {
             amount: 500,
-            currency: 'AUD'
+            currency: 'USD'
           }
         }
       }
