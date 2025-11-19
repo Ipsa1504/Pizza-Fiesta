@@ -28,4 +28,4 @@ Menu page
 
 ## Getting Started
 
-Live demo of this app [here](https://pizza-fiesta.vercel.app/).<br><br>
+Live demo of this app [here](https://pizza-fiesta.netlify.app/).<br><br>
