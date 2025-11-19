@@ -3,11 +3,9 @@ import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 
 // 🚨 REQUIRED for Stripe Webhooks to work
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};
+export const runtime = "nodejs";
+export const preferredRegion = "auto";
+
 
 export async function POST(req: NextRequest) {
   if (!process.env.STRIPE_SECRET_KEY || !process.env.STRIPE_SIGNING_SECRET) {
